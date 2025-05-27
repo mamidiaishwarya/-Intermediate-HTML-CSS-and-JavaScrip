@@ -1,1 +1,235 @@
-# -Intermediate-HTML-CSS-and-JavaScrip
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Task 2: Complete Web Page</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* General Styles */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f2f2f2;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+
+    section {
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 800px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Contact Form */
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    form input, form button {
+      padding: 10px;
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    form input[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+
+    /* Flexbox Navigation */
+    nav {
+      background-color: #333;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 10px;
+    }
+
+    nav a {
+      color: white;
+      margin: 0 15px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    /* Grid Layout */
+    .grid-layout {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .grid-item {
+      background-color: #e0e0e0;
+      padding: 20px;
+      text-align: center;
+      border-radius: 10px;
+    }
+
+    /* To-Do List */
+    .todo-container {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .todo-container input[type="text"] {
+      width: 65%;
+      padding: 10px;
+      margin-right: 10px;
+    }
+
+    .todo-container button {
+      padding: 10px;
+      background-color: #28a745;
+      border: none;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    ul#todoList {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    ul#todoList li {
+      background-color: #f4f4f4;
+      margin: 8px 0;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      border-radius: 5px;
+    }
+
+    ul#todoList li button {
+      background-color: red;
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    /* Responsive Navigation */
+    @media (max-width: 600px) {
+      nav {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <a href="#contact">Contact</a>
+    <a href="#layout">Layout</a>
+    <a href="#todo">To-Do List</a>
+  </nav>
+
+  <!-- Contact Form Section -->
+  <section id="contact">
+    <h2>Contact Form</h2>
+    <form id="contactForm" onsubmit="return validateForm()">
+      <input type="text" id="name" placeholder="Your Name">
+      <div class="error" id="nameError"></div>
+
+      <input type="email" id="email" placeholder="Your Email">
+      <div class="error" id="emailError"></div>
+
+      <input type="submit" value="Submit">
+    </form>
+  </section>
+
+  <!-- Responsive Layout Section -->
+  <section id="layout">
+    <h2>Responsive Layout</h2>
+    <div class="grid-layout">
+      <div class="grid-item">Block 1</div>
+      <div class="grid-item">Block 2</div>
+      <div class="grid-item">Block 3</div>
+    </div>
+  </section>
+
+  <!-- To-Do List Section -->
+  <section id="todo">
+    <h2>To-Do List</h2>
+    <div class="todo-container">
+      <input type="text" id="todoInput" placeholder="Enter a task">
+      <button onclick="addTask()">Add Task</button>
+      <ul id="todoList"></ul>
+    </div>
+  </section>
+
+  <!-- JavaScript -->
+  <script>
+    // Contact Form Validation
+    function validateForm() {
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      let valid = true;
+
+      document.getElementById("nameError").textContent = "";
+      document.getElementById("emailError").textContent = "";
+
+      if (name === "") {
+        document.getElementById("nameError").textContent = "Name is required.";
+        valid = false;
+      }
+
+      if (email === "") {
+        document.getElementById("emailError").textContent = "Email is required.";
+        valid = false;
+      } else if (!/^\S+@\S+\.\S+$/.test(email)) {
+        document.getElementById("emailError").textContent = "Invalid email format.";
+        valid = false;
+      }
+
+      return valid;
+    }
+
+    // To-Do List Function
+    function addTask() {
+      const input = document.getElementById("todoInput");
+      const task = input.value.trim();
+
+      if (task === "") {
+        alert("Please enter a task.");
+        return;
+      }
+
+      const li = document.createElement("li");
+      li.textContent = task;
+
+      const deleteBtn = document.createElement("button");
+      deleteBtn.textContent = "Delete";
+      deleteBtn.onclick = () => li.remove();
+
+      li.appendChild(deleteBtn);
+      document.getElementById("todoList").appendChild(li);
+
+      input.value = "";
+    }
+  </script>
+
+</body>
+</html>
